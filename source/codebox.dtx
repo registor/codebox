@@ -201,7 +201,7 @@ Copyright and Licence
 %   Right brace   \}     Tilde         \~}
 %
 %
-% \title{\bfseries\pkg{codebox}：代码盒子排版宏包}
+% \title{\bfseries\pkg{codebox}：代码盒子排版宏包\\ \bfseries\pkg{codebox}：progrmming source code box}
 % \author{耿楠\\ \path{nangeng@nwafu.edu.cn}}
 % \date{\filedate\qquad\fileversion\thanks{\url{https://github.com/registor/codebox}}\thanks{\url{https://gitee.com/nwafu_nan/codebox}}}
 % \maketitle
@@ -214,7 +214,7 @@ Copyright and Licence
 % 排版源代码盒子的环境和命令。
 % 其中，\env{codebox}和\env{codeview}环境用于根据环境内容排版代码，
 % \tn{codefile}和\tn{cvfile}命令用于根据文件内容排版代码。
-% \pkg{codebox}同时提供了各环境和命令的星号版本，
+% 同时，\pkg{codebox}还提供了各环境和命令的星号版本，
 % 如\env{codebox*}和\env{codeview*}，\tn{codefile*}和\tn{cvfile*}，
 % 用于为代码盒子添加底线注释。
 %
@@ -237,7 +237,7 @@ Copyright and Licence
 %
 % \subsection{\env{codebox}和\env{codebox*}环境}
 %
-% \begin{function}[added=2021-12-25,updated=2021-12-25]{codebox}
+% \begin{function}[added=2021-12-25,updated=2021-12-25]{codebox,codebox*}
 %   \begin{syntax}
 %     \tn{begin}\{codebox\}\oarg{外观选项}\Arg{盒子标题}
 %     .....
@@ -255,7 +255,7 @@ Copyright and Licence
 %   此时，需要在\oarg{外观选项}中用
 %   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
 %
-%   终端窗口的外观也可以通过\tn{codeset}命令的逗号分隔
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
 %   key-value列表进行设置。
 %
 % \end{function}
@@ -297,7 +297,7 @@ Copyright and Licence
 %   此时，需要在\oarg{外观选项}中用
 %   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
 %
-%   排版样式也可以通过\tn{codeset}命令的逗号分隔的
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
 %   key-value列表进行设置。
 % \end{function}
 %
@@ -315,7 +315,7 @@ Copyright and Licence
 %
 % \subsection{\env{codeview}和\env{codeview*}环境}
 %
-% \begin{function}[added=2021-12-26,updated=2021-12-26]{codeview}
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{codeview,codeview*}
 %   \begin{syntax}
 %     \tn{begin}\{codeview\}\oarg{外观选项}\Arg{盒子标题}
 %     .....
@@ -333,7 +333,7 @@ Copyright and Licence
 %   此时，需要在\oarg{外观选项}中用
 %   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
 %
-%   终端窗口的外观也可以通过\tn{codeset}命令的逗号分隔
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
 %   key-value列表进行设置。
 % \end{function}
 %
@@ -376,7 +376,7 @@ Copyright and Licence
 %   此时，需要在\oarg{外观选项}中用
 %   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
 %
-%   排版样式也可以通过\tn{codeset}命令的逗号分隔的
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
 %   key-value列表进行设置。
 % \end{function}
 %
@@ -393,7 +393,7 @@ Copyright and Licence
 %
 % \section{选项说明}
 %
-%   \pkg{codebox}宏包提供了一系列选项，以设置终端窗口外观样式。
+%   \pkg{codebox}宏包提供了一系列选项，以设置代码盒子的外观样式。
 %   载入\pkg{codebox}宏包后，以下选项均可通过用户接口命令\tn{codeset}进行设置。
 %   当然，这些选项也可以通过各个环境或命令的\oarg{外观选项}进行设置。
 %
@@ -423,7 +423,7 @@ Copyright and Licence
 %   \begin{syntax}
 %     pretitle = \Arg{代码名称} \init{Code}
 %   \end{syntax}
-%   \opt{pretitle} 用于代码编号前的代码名称，默认值为\textbf{Code}。
+%   \opt{pretitle} 用于代码编号前的代码名称前缀，默认值为\textbf{Code}。
 % \end{function}
 %
 % \subsection{代码样式}
@@ -523,8 +523,8 @@ Copyright and Licence
 %   \end{center}
 %
 % \subsection{listings引擎}
-% 可以在选项中使用\kvopt{\meta{minted}}{\meta{false}}
-% \pkg{listings}宏包排版代码。
+% 在选项中使用\kvopt{\meta{minted}}{\meta{false}}
+% 以使用\pkg{listings}宏包排版代码。
 %
 %   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
 %     \centering
@@ -893,7 +893,7 @@ Copyright and Licence
 %    \begin{macrocode}
     unknown .code:n = { \@@_error:n { unknown-option } }
   }
-\msg_new:nnn { termset } { unknown-option }
+\msg_new:nnn { codebox } { unknown-option }
   { package~ option~ "\l_keys_key_tl"~ is~ unknown. }
 %    \end{macrocode}
 %
@@ -944,7 +944,7 @@ Copyright and Licence
 % \end{macro}
 %
 % \begin{macro}{\@@_code_engine_tcbset:}
-% 设置终端盒子minted宏包参数。
+% 设置代码盒子minted宏包参数。
 %
 %    \begin{macrocode}
 \cs_new:Npn \@@_code_engine_tcbset:
@@ -996,7 +996,7 @@ Copyright and Licence
 % \end{macro}
 %
 % \begin{macro}{\@@_comment_tcbset:}
-% 设置终端盒子底线注释。
+% 设置代码盒子底线注释。
 %
 %    \begin{macrocode}
 \cs_new:Npn \@@_comment_tcbset:
@@ -1019,7 +1019,7 @@ Copyright and Licence
 %
 % \subsection{不计数代码盒子用户接口}
 %
-%  定义不带底线注释的窗口模拟环境\env{codebox}
+%  定义不带底线注释的代码盒子环境\env{codebox}
 %
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codebox }{O{} m }
@@ -1037,7 +1037,7 @@ Copyright and Licence
   }
 %    \end{macrocode}
 %
-%  定义带底线注释的窗口模拟环境\env{codebox*}
+%  定义带底线注释的代码盒子环境\env{codebox*}
 %
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codebox* }{O{} m }
@@ -1089,7 +1089,7 @@ Copyright and Licence
 \@@_set_counter_parent:
 %    \end{macrocode}
 %
-%  定义不带底线注释的窗口模拟环境\env{codeview}
+%  定义不带底线注释的代码盒子环境\env{codeview}
 %
 %    \begin{macrocode}
 \DeclareTCBListing[use~counter=codecounter]{codeviewaux}{m}
@@ -1122,7 +1122,7 @@ Copyright and Licence
   }
 %    \end{macrocode}
 %
-%  定义带底线注释的窗口模拟环境\env{codeview*}
+%  定义带底线注释的代码盒子环境\env{codeview*}
 %
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codeview* }{O{} m }
