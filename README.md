@@ -1,56 +1,44 @@
-Source Code Box based tcolorbox, minted or lislistings
+Create code box and viewer based on tcolorbox and minted/listings
 =======
 
-`codebox` is a LaTeX package developed in LaTeX3, which provides `\codebox` macros. These two macros are used for typesetting Chinese character with or without a background grid such as a cross grid or star grid for Chinese character writting learning.
+`codebox` is a LaTeX3 package developed based on tcolorbox and minted/listings, which provides environments `codebox` and `codeview` to typset with environment body, and macros `\codefile` and `\cvfile` to typeset programming source code from a file in a fancy box.
 
-And you can display the Hanyu Pinyin above the Chinese character and the translation below them as needed.
+The starred version of all environments and macros are provided at the same time, such as `codebox*`, `codeview*`, `\codefile*` and `\cvfile*` which adds comment at bottom of the fancy box.
 
-The `\codebox` macro can automatically invoke the `\xpinyin*` macro of the `xpinyin` package to get Hanyu Pinyin according to the Chinese characters.  And the `\codebox` macro provides an asterisk version of `\codebox*`, whose function is achieved by automatically invoking the `xpinyin` package's `\pinyin` macro to get Hanyu Pinyin. The `\hanzidialog` macro is implemented by manually inserting the `\pinyin` macro of the `xpinyin` package in it's pinyin option.
-
-`codebox` is a utility for learning to write and pronounce Chinese characters, and can be used for Chinese character learning plans, presentations, exercise booklets and other documentation work.
-
-The development of this package was inspired by [Jan Vorisek's codebox package](https://github.com/janvorisek/chinese-latex-utilities).
-
-However, the new package redesigned the `\codebox` and `\hanzidialog` macros and the background grid is redesigned with the `l3draw` package by reference to [zitie package](https://www.ctan.org/pkg/zitie).  Also, the new package provides more options and arguments in order to get better results.
-
-The `codebox.sty` package currently only supports the XeTeX engine and only supports UTF-8 encoded LaTeX source files.
-
-You can read the manual (in Chinese) for more details and examples.
+You can read the manual (in Chinese/English) for more details and examples.
 
 Contributing
 ------------
 
 1. github repository:
-    1. repository: [codebox-l3](https://github.com/registor/codebox-l3)
-    2. Issues and pull requests are welcome. [issue](https://github.com/registor/codebox-l3/issues) or [pull request](https://github.com/registor/codebox-l3/pulls).
+    1. repository: [codebox](https://github.com/registor/codebox)
+    2. Issues and pull requests are welcome. [issue](https://github.com/registor/codebox/issues) or [pull request](https://github.com/registor/codebox/pulls).
 
 2. gitee repository:
-    1. repository: [codebox-l3](https://gitee.com/nwafu_nan/codebox-l3)
-    2. Issues and pull requests are welcome. [issue](https://gitee.com/nwafu_nan/codebox-l3/issues) or [pull request](https://gitee.com/nwafu_nan/codebox-l3/pulls).
+    1. repository: [codebox](https://gitee.com/nwafu_nan/codebox)
+    2. Issues and pull requests are welcome. [issue](https://gitee.com/nwafu_nan/codebox/issues) or [pull request](https://gitee.com/nwafu_nan/codebox/pulls).
 
-基于LaTeX3的带注音和译文的汉字练习宏包
+基于tcolorbox的终端模拟宏包
 =======
 
-`codebox`是一个用LaTeX3开发的LaTeX宏包，它提供了`\codebox`和`\hanzidialog` 两个命令。这两个命令分别用于排版汉字学习中带有或不带田字格、米字格等背景格子的汉字，并可以根据需要在汉字正上方显示拼音，在正下方显示译文。其中，`\codebox`命令能够根据汉字自动调用`xpinyin`宏包的`\xpinyin*`命令实现汉字注音。并且`\codebox`命令提供了`\codebox*`星号版本，其注音功能是通过自动调用`xpinyin`宏包的`\pinyin`命令实现的。`\hanzidialog`命令的注音功能是通过在拼音选项中手动插入`xpinyin`宏包`\pinyin`命令实现的。
+`codebox`是一个基于tcolorbox的用LaTeX3开发的终端模拟LaTeX宏包，它提供了用于排版程序源代码盒子的环境和命令。
 
-`codebox` 是一个用于学习汉字书写与发音的工具，可以用于汉字学习教案、演示文稿、习题册等文档工作。
+其中`codebox`和`codeview`环境用于根据环境内容排版代码，`\codefile`和`\cvfile`命令用于根据文件内容排版代码。
 
-该宏包的开发灵感源自[Jan Vorisek的codebox宏包](https://github.com/janvorisek/chinese-latex-utilities)。但对`\codebox`和`\hanzidialog`命令重新进行了设计，并参考[zitie字贴宏包](https://www.ctan.org/pkg/zitie)重新用`l3draw`宏包设计了背景格子。同时，新的宏包也提供了更多命令选项和参数，以期更好地控制排版结果。
+`codebox`同时提供了各环境和命令的星号版本，如`codebox*`和`codeview*`，`\codefile*`和`\cvfile*`，用于为代码盒子添加底线注释。
 
-目前，`codebox.sty`宏包仅支持XeTeX编译引擎，并且只支持UTF-8编码的LaTeX源文件。
-
-可以通过阅读宏包手册(中文)以也解该宏包更多的使用细节和使用样例。
+可以通过阅读宏包手册(中文/英文)以也解该宏包更多的使用细节和使用样例。
 
 ###  参与贡献
 ---------------------
 
 1. github仓库:
-    (1). 仓库地址: [codebox-l3](https://github.com/registor/codebox-l3)
-    (2). Issues和PR: [issue](https://github.com/registor/codebox-l3/issues) or [pull request](https://github.com/registor/codebox-l3/pulls).
+    (1). 仓库地址: [codebox](https://github.com/registor/codebox)
+    (2). Issues和PR: [issue](https://github.com/registor/codebox/issues) or [pull request](https://github.com/registor/codebox/pulls).
 
 2. gitee仓库:
-    (1). 仓库地址: [codebox-l3](https://gitee.com/nwafu_nan/codebox-l3)
-    (2). Issues and PR: [issue](https://gitee.com/nwafu_nan/codebox-l3/issues) or [pull request](https://gitee.com/nwafu_nan/codebox-l3/pulls).
+    (1). 仓库地址: [codebox](https://gitee.com/nwafu_nan/codebox)
+    (2). Issues and PR: [issue](https://gitee.com/nwafu_nan/codebox/issues) or [pull request](https://gitee.com/nwafu_nan/codebox/pulls).
 
 Copyright and Licence
 ---------------------
