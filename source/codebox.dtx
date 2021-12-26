@@ -181,7 +181,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{360}
+% \CheckSum{309}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -636,41 +636,6 @@ Copyright and Licence
 \ExplSyntaxOn
 %    \end{macrocode}
 %
-% 解决minted的autogobble和使用fancyvrb宏包中的问题
-% https://github.com/gpoore/minted/issues/316
-%
-%    \begin{macrocode}
-\ExplSyntaxOff
-\RequirePackage {regexpatch} % for starred \xpatchcmd which can replace all
-\makeatletter
-% trick, in order to get the integer value from either a macro or register
-% in an expandable way
-\def\minted@use@FancyVerbStartNum{\the\numexpr\FancyVerbStartNum}
-\def\minted@use@FancyVerbStopNum{\the\numexpr\FancyVerbStopNum}
-
-% patch for fivesum computation
-\xpatchcmd*\minted@pygmentize
-  {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}
-  {\minted@use@FancyVerbStartNum}
-  {}{\PatchFailed}
-\xpatchcmd*\minted@pygmentize
-  {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}
-  {\minted@use@FancyVerbStopNum}
-  {}{\PatchFailed}
-
-% patch for option "autogobble"
-\xpatchcmd\minted@autogobble
-  {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}
-  {\minted@use@FancyVerbStartNum}
-  {}{\PatchFailed}
-\xpatchcmd\minted@autogobble
-  {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}
-  {\minted@use@FancyVerbStopNum}
-  {}{\PatchFailed}
-\makeatother
-\ExplSyntaxOn
-%    \end{macrocode}
-%
 % 载入\pkg{tcolorbox}和\pkg{tikz}附加库
 %
 %    \begin{macrocode}
@@ -844,7 +809,7 @@ Copyright and Licence
 % 代码样式
 %    \begin{macrocode}
     codestyle .tl_set:N = \l_@@_code_style_tl,
-    codestyle .initial:n = bw,
+    codestyle .initial:n = default,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -897,15 +862,6 @@ Copyright and Licence
   { package~ option~ "\l_keys_key_tl"~ is~ unknown. }
 %    \end{macrocode}
 %
-% 参数默认值
-%    \begin{macrocode}
-\keys_set:nn { codebox }
-  {
-    minted = true,
-    codestyle = codeblocks,
-  }
-%    \end{macrocode}
-%
 % \subsection{选项设置用户接口}
 %
 % \begin{macro}{\codeset}
@@ -947,13 +903,13 @@ Copyright and Licence
 % 设置代码盒子minted宏包参数。
 %
 %    \begin{macrocode}
-\cs_new:Npn \@@_code_engine_tcbset:
+\cs_new:Npn \@@_code_engine_tcbset:n #1
   {
     \bool_if:NTF \l_@@_minted_bool
       {
         \tcbset{
           listing~engine=minted,%
-          minted~style=\tl_use:N \l_@@_code_style_tl,%
+          minted~style=#1,
           minted~options={%
             % highlightlines={\ifodd\value{lstnumber}\value{lstnumber}\fi},
             autogobble,
@@ -992,6 +948,7 @@ Copyright and Licence
             }%
         }
   }
+\cs_generate_variant:Nn \@@_code_engine_tcbset:n {V}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1027,7 +984,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
     \tcblisting{}
@@ -1045,7 +1002,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
     \tcblisting{}
@@ -1069,7 +1026,7 @@ Copyright and Licence
 
     \group_begin:
     \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{
       lang,
@@ -1101,7 +1058,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{
       cv,
@@ -1130,7 +1087,7 @@ Copyright and Licence
     \bool_set_true:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{
       cv,
@@ -1169,7 +1126,7 @@ Copyright and Licence
 
     \group_begin:
     \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
-    \@@_code_engine_tcbset:
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
     \@@_comment_tcbset:
     \tcbset{
       cv,
