@@ -148,7 +148,7 @@ Copyright and Licence
 %</internal>
 %<package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<package>\RequirePackage{expl3}
-%<+package>\GetIdInfo$Id: codebox.dtx 1.0.0 2021-12-26 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
+%<+package>\GetIdInfo$Id: codebox.dtx 1.0.1 2021-12-27 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
 %<package>  {Code Box with tcolorbox and minted/listings.}
 %<package>\ProvidesExplPackage{\ExplFileName}
 %<package>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -159,7 +159,6 @@ Copyright and Licence
 \usepackage{xcolor}
 \usepackage{xcolor-material}
 \usepackage{codebox}
-\renewcommand{\thecodecounter}{\thesection.\arabic{codecounter}}
 \renewcommand*\marg[1]{\{\meta{#1}\}}
 \renewcommand*\oarg[1]{[\meta{#1}]}
 \renewcommand*\parg[1]{(\meta{#1})}
@@ -181,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{309}
+% \CheckSum{286}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -577,23 +576,7 @@ Copyright and Licence
 \RequirePackage { xtemplate, l3keys2e, xparse }
 %    \end{macrocode}
 %
-% 检查\LaTeX3 宏包版本
-%
-%    \begin{macrocode}
-% \clist_map_inline:nn { xtemplate, l3keys2e }
-%   {
-%     \@ifpackagelater {#1} { 2020/07/17 }
-%       { } { \msg_error:nnn { codebox } { l3-too-old } {#1} }
-%   }
-% \msg_new:nnn { codebox } { l3-too-old }
-%   {
-%     Package~ "#1"~ is~ too~ old. \\\\
-%     Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
-%     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
-%     manager~ or~ from~ CTAN.
-%   }
-%
-%    \end{macrocode}
+% \changes{v1.0.1}{2021/12/26}{删除原\LaTeX3 版本检测代码}
 %
 % \subsection{载入其它宏包}
 %
@@ -635,6 +618,8 @@ Copyright and Licence
   {}{}
 \ExplSyntaxOn
 %    \end{macrocode}
+%
+% \changes{v1.0.1}{2021/12/26}{minted2.6发布，删除原补丁代码}
 %
 % 载入\pkg{tcolorbox}和\pkg{tikz}附加库
 %
@@ -728,11 +713,6 @@ Copyright and Licence
     colbacktitle=cvgray,
     fonttitle=\ttfamily,
     coltitle=black,
-    % overlay~broken = {
-    %   \begin{tcbclipinterior}
-    %     \fill[cvblue] (frame.south~west) rectangle ([xshift=5.0mm]frame.north~west);
-    %   \end{tcbclipinterior}
-    % },
     underlay~boxed~title = {
       \begin{tcbclipinterior}
         \fill[cvblue] (frame.south~west) rectangle ([xshift=5.0mm,yshift=0mm]frame.north~west);
@@ -865,7 +845,9 @@ Copyright and Licence
 % \subsection{选项设置用户接口}
 %
 % \begin{macro}{\codeset}
+%
 % 选项设置用户接口。
+%
 %    \begin{macrocode}
 \NewDocumentCommand \codeset { m }
   { \keys_set:nn { codebox } {#1} }
@@ -874,16 +856,8 @@ Copyright and Licence
 %
 % \subsection{内部函数}
 %
-%    \begin{macrocode}
-% \bool_if:NTF \l_@@_minted_bool
-%   {
-%     \tcbuselibrary{minted}
-%   }{
-%     \tcbuselibrary{listings}
-%   }
-%    \end{macrocode}
-%
 % \begin{macro}{\@@_set_counter_parent:}
+%
 % 设置代码编号计数器的父计数器。
 %
 %    \begin{macrocode}
@@ -893,11 +867,13 @@ Copyright and Licence
       {
         \newcounter{codecounter}[chapter]%
       }{
-        \newcounter{codecounter}[section]%
+        \newcounter{codecounter}%[section]%
       }
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \changes{v1.0.1}{2021/12/26}{调整minted style选项为参数实现}
 %
 % \begin{macro}{\@@_code_engine_tcbset:}
 % 设置代码盒子minted宏包参数。
@@ -911,7 +887,6 @@ Copyright and Licence
           listing~engine=minted,%
           minted~style=#1,
           minted~options={%
-            % highlightlines={\ifodd\value{lstnumber}\value{lstnumber}\fi},
             autogobble,
             breaklines,%
             fontsize=\tl_use:N \l_@@_code_fontsize_tl,%
@@ -974,6 +949,8 @@ Copyright and Licence
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v1.0.1}{2021/12/27}{修订代码盒子前多一个逗号的问题}
+%
 % \subsection{不计数代码盒子用户接口}
 %
 %  定义不带底线注释的代码盒子环境\env{codebox}
@@ -984,7 +961,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
     \tcblisting{}
@@ -1002,7 +979,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
     \tcblisting{}
@@ -1026,7 +1003,7 @@ Copyright and Licence
 
     \group_begin:
     \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{
       lang,
@@ -1058,7 +1035,7 @@ Copyright and Licence
     \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{
       cv,
@@ -1087,7 +1064,7 @@ Copyright and Licence
     \bool_set_true:N  \l_@@_comment_bool
     \group_begin:
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{
       cv,
@@ -1126,7 +1103,7 @@ Copyright and Licence
 
     \group_begin:
     \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
-    \@@_code_engine_tcbset:V \l_@@_code_style_tl,
+    \@@_code_engine_tcbset:V \l_@@_code_style_tl
     \@@_comment_tcbset:
     \tcbset{
       cv,
