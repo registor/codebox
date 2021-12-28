@@ -5,7 +5,7 @@
 \usepackage{xcolor-material}
 \usepackage{codebox}
 
-\renewcommand{\thecodecounter}{\thesection.\arabic{codecounter}}
+% \renewcommand{\thecvcounter}{\thesection.\arabic{cvcounter}}
 \NewDocumentCommand{\init}{+v}{\hspace{\fill}Init~=~\textcolor{blue}{\bfseries#1}}
 \DeclareDocumentCommand\opt{m}{\texttt{#1}}
 \DeclareDocumentCommand\kvopt{mm}
@@ -14,7 +14,7 @@
 
 \title{\bfseries\pkg{codebox}：programming code box}
 \author{Nan Geng\\ \url{nangeng@nwafu.edu.cn}}
-\date{2021/12/26\qquad v1.0.0\thanks{\url{https://github.com/registor/codebox}}
+\date{2021/12/27\qquad v1.0.1\thanks{\url{https://github.com/registor/codebox}}
 \thanks{\url{https://gitee.com/nwafu_nan/codebox}}}
 
 \begin{document}
@@ -320,6 +320,21 @@ or command's \oarg{options}.
   valid only for \pkg{minted} engine.
   Note the unit is mm.
   The default is\textbf{3.0}.
+\end{function}
+
+\section{The counter}
+
+\begin{function}[added=2021-12-28,updated=2021-12-28]{cvconuter}
+  The \pkg{codebox} package provides a \texttt{cvcounter} counter 
+  that can be used to count code boxes with environment \env{codeview}/\env{codeview*}
+  and the command \tn{cvfile}/\tn{cvfile*}. 
+
+  By default, if \tn{thechapter} exists, its parent counter is set to \textbf{chapter}
+  otherwise it will be counted uniformly by full text. 
+
+  You can use something like
+  \tn{renewcommand\{\tn{thecvcounter}\}\{\tn{thechapter.\tn{arabic\{cvcounter\}}}\}}
+  to change the numbered output.
 \end{function}
 
 \section{Examples}
