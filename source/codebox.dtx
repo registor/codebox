@@ -1,0 +1,1176 @@
+% \iffalse meta-comment
+% !TEX program  = XeLaTeX
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+Create code box and viewer based on tcolorbox and minted/listings
+=======
+
+`codebox` is a LaTeX3 package developed based on tcolorbox and minted/listings, which provides environments `codebox` and `codeview` to typset with environment body, and macros `\codefile` and `\cvfile` to typeset programming source code from a file in a fancy box.
+
+The starred version of all environments and macros are provided at the same time, such as `codebox*`, `codeview*`, `\codefile*` and `\cvfile*` which adds comment at bottom of the fancy box.
+
+You can read the manual (in Chinese/English) for more details and examples.
+
+Contributing
+------------
+
+1. github repository:
+    1. repository: [codebox](https://github.com/registor/codebox)
+    2. Issues and pull requests are welcome. [issue](https://github.com/registor/codebox/issues) or [pull request](https://github.com/registor/codebox/pulls).
+
+2. gitee repository:
+    1. repository: [codebox](https://gitee.com/nwafu_nan/codebox)
+    2. Issues and pull requests are welcome. [issue](https://gitee.com/nwafu_nan/codebox/issues) or [pull request](https://gitee.com/nwafu_nan/codebox/pulls).
+
+基于tcolorbox的终端模拟宏包
+=======
+
+`codebox`是一个基于tcolorbox的用LaTeX3开发的终端模拟LaTeX宏包，它提供了用于排版程序源代码盒子的环境和命令。
+
+其中`codebox`和`codeview`环境用于根据环境内容排版代码，`\codefile`和`\cvfile`命令用于根据文件内容排版代码。
+
+`codebox`同时提供了各环境和命令的星号版本，如`codebox*`和`codeview*`，`\codefile*`和`\cvfile*`，用于为代码盒子添加底线注释。
+
+可以通过阅读宏包手册(中文/英文)以也解该宏包更多的使用细节和使用样例。
+
+###  参与贡献
+---------------------
+
+1. github仓库:
+    (1). 仓库地址: [codebox](https://github.com/registor/codebox)
+    (2). Issues和PR: [issue](https://github.com/registor/codebox/issues) or [pull request](https://github.com/registor/codebox/pulls).
+
+2. gitee仓库:
+    (1). 仓库地址: [codebox](https://gitee.com/nwafu_nan/codebox)
+    (2). Issues and PR: [issue](https://gitee.com/nwafu_nan/codebox/issues) or [pull request](https://gitee.com/nwafu_nan/codebox/pulls).
+
+Copyright and Licence
+---------------------
+
+    Copyright (C) 2020-2021 by Nan Geng <nangeng@nwafu.edu.cn>
+    ----------------------------------------------------------------------
+
+    This work may be distributed and/or modified under the
+    conditions of the LaTeX Project Public License, either
+    version 1.3c of this license or (at your option) any later
+    version. This version of this license is in
+       http://www.latex-project.org/lppl/lppl-1-3c.txt
+    and the latest version of this license is in
+       http://www.latex-project.org/lppl.txt
+    and version 1.3 or later is part of all distributions of
+    LaTeX version 2005/12/01 or later.
+
+    This work has the LPPL maintenance status "maintained".
+
+    The Current Maintainer of this work is Nan Geng.
+
+    This package consists of the file  codebox.dtx,
+                 and the derived files codebox.sty,
+                                       codebox.pdf,
+                                       codebox.ins,
+                                       README.md (this file).
+
+%</readme>
+%<*internal>
+\fi
+\begingroup
+  \def\temp{LaTeX2e}
+\expandafter\endgroup\ifx\temp\fmtname\else
+\csname fi\endcsname
+%</internal>
+%<*install>
+
+\input ctxdocstrip %
+
+\let\MetaPrefix\relax
+
+\preamble
+
+    Copyright (C) 2020-2021 by Nan Geng <nangeng@nwafu.edu.cn>
+--------------------------------------------------------------------------
+
+    This work may be distributed and/or modified under the
+    conditions of the LaTeX Project Public License, either
+    version 1.3c of this license or (at your option) any later
+    version. This version of this license is in
+       http://www.latex-project.org/lppl/lppl-1-3c.txt
+    and the latest version of this license is in
+       http://www.latex-project.org/lppl.txt
+    and version 1.3 or later is part of all distributions of
+    LaTeX version 2005/12/01 or later.
+
+    This work has the LPPL maintenance status "maintained".
+
+    The Current Maintainer of this work is Nan Geng.
+
+--------------------------------------------------------------------------
+
+\endpreamble
+
+\postamble
+
+    This package consists of the file  codebox.dtx,
+                 and the derived files codebox.sty,
+                                       codebox.pdf,
+                                       codebox.ins,
+                                       README.md.
+\endpostamble
+
+\declarepostamble\emptypostamble
+\endpostamble
+
+\def\MetaPrefix{-- }
+
+
+\let\MetaPrefix\DoubleperCent
+
+\generate
+  {
+%</install>
+%<*internal>
+    \usedir{source/xelatex/codebox}
+    \file{codebox.ins} {\from{\jobname.dtx}{install}}
+%</internal>
+%<*install>
+    \usedir{xetex/xelatex/codebox}
+    \file{codebox.sty} {\from{\jobname.dtx}{package}}
+    \nopreamble\nopostamble
+    \usedir{doc/xelatex/codebox}
+    \file{README.md}   {\from{\jobname.dtx}{readme}}
+  }
+
+\endbatchfile
+%</install>
+%<*internal>
+\fi
+%</internal>
+%<package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+%<package>\RequirePackage{expl3}
+%<+package>\GetIdInfo$Id: codebox.dtx 1.0.1 2021-12-27 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
+%<package>  {Code Box with tcolorbox and minted/listings.}
+%<package>\ProvidesExplPackage{\ExplFileName}
+%<package>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<*driver>
+\documentclass{ctxdoc}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xcolor-material}
+\usepackage{codebox}
+\renewcommand*\marg[1]{\{\meta{#1}\}}
+\renewcommand*\oarg[1]{[\meta{#1}]}
+\renewcommand*\parg[1]{(\meta{#1})}
+\NewDocumentCommand{\init}{+v}{\hspace{\fill}初始值~=~\textcolor{blue}{\bfseries#1}}
+\DeclareDocumentCommand\opt{m}{\texttt{#1}}
+\DeclareDocumentCommand\kvopt{mm}
+  {\texttt{#1\breakablethinspace=\breakablethinspace#2}}
+\def\breakablethinspace{\hskip 0.16667em\relax}
+\begin{document}
+%<!--CODEDOC-->  \DisableImplementation
+  \EnableImplementation
+  \DocInput{\jobname.dtx}
+  \IndexLayout
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \changes{v1.0.0}{2021/12/25}{开始编写模板}
+%
+% \CheckSum{291}
+% \GetFileId{codebox.sty}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \title{\bfseries\pkg{codebox}：代码盒子排版宏包\\ \bfseries\pkg{codebox}：progrmming source code box}
+% \author{耿楠\\ \path{nangeng@nwafu.edu.cn}}
+% \date{\filedate\qquad\fileversion\thanks{\url{https://github.com/registor/codebox}}\thanks{\url{https://gitee.com/nwafu_nan/codebox}}}
+% \maketitle
+%
+% \begin{documentation}
+%
+% \begin{abstract}
+%
+% \pkg{codebox} 是一个基于\pkg{tcolorbox}用\LaTeX3 开发的 \LaTeX 宏包，它提供用于
+% 排版源代码盒子的环境和命令。
+% 其中，\env{codebox}和\env{codeview}环境用于根据环境内容排版代码，
+% \tn{codefile}和\tn{cvfile}命令用于根据文件内容排版代码。
+% 同时，\pkg{codebox}还提供了各环境和命令的星号版本，
+% 如\env{codebox*}和\env{codeview*}，\tn{codefile*}和\tn{cvfile*}，
+% 用于为代码盒子添加底线注释。
+%
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{简介}
+%
+% \pkg{codebox} 是一个基于\pkg{tcolorbox}用\LaTeX3 开发的 \LaTeX 宏包，
+% 它可以根据用户设置使用\pkg{minted}或\pkg{listings}宏包实现代码盒子排版。
+%
+% 该宏包提供了\env{codebox}和\env{codeview}两个环境和
+% \tn{codefile}和\tn{cvfile}两个命令以排版代码盒子。
+%
+% 同时，\pkg{codebox}宏包还提供环境和命令的星号版本，
+% 用于为代码盒子添加底线注释。
+%
+% \section{用户接口}
+%
+% \subsection{\env{codebox}和\env{codebox*}环境}
+%
+% \begin{function}[added=2021-12-25,updated=2021-12-25]{codebox,codebox*}
+%   \begin{syntax}
+%     \tn{begin}\{codebox\}\oarg{外观选项}\Arg{盒子标题}
+%     .....
+%     \tn{end}\{codebox\}
+%     \tn{begin}\{codebox*\}\oarg{外观选项}\Arg{盒子标题}
+%     .....
+%     \tn{end}\{codebox*\}
+%   \end{syntax}
+%   使用环境内容排版代码盒子。
+%   可以通过\Arg{盒子标题}为代码盒子设置标题。
+%
+%   \oarg{外观选项}中通过key-value方式设置代码盒子外观。
+%
+%   星号环境\texttt{codebox*}用于为代码盒子添加底线注释，
+%   此时，需要在\oarg{外观选项}中用
+%   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
+%
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
+%   key-value列表进行设置。
+%
+% \end{function}
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \begin{codebox}{代码标题}
+%       #include <stdio.h>
+%       #include <stdlib.h>
+%
+%       int main(void)
+%       {
+%           printf("Hello World!\n");
+%
+%           return 0;
+%       }
+%     \end{codebox}
+%   \end{Verbatim}
+%
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \codefile{代码盒子标题}{test.c}
+%     \end{minipage}
+%   \end{center}
+%
+% \subsection{\tn{codefile}和\tn{codefile*}命令}
+%
+% \begin{function}[added=2021-12-25,updated=2021-12-25]{\codefile,\codefile*}
+%   \begin{syntax}
+%     \tn{codefile}  \oarg{外观选项} \Arg{盒子标题} \Arg{代码文件}
+%     \tn{codefile*} \oarg{外观选项} \Arg{盒子标题} \Arg{代码文件}
+%   \end{syntax}
+%
+%   用于排版代码盒子，源代码来自于\Arg{代码文件}，
+%   可以通过\Arg{盒子标题}为代码盒子设置标题。
+%
+%   \oarg{外观选项}中通过key-value方式设置代码盒子外观。
+%
+%   星号命令\texttt{codefile*}用于为代码盒子添加底线注释，
+%   此时，需要在\oarg{外观选项}中用
+%   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
+%
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
+%   key-value列表进行设置。
+% \end{function}
+%
+% \newpage
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \codefile{代码盒子标题}{test.c}
+%   \end{Verbatim}
+%
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \codefile{代码盒子标题}{test.c}
+%     \end{minipage}
+%   \end{center}
+%
+% \subsection{\env{codeview}和\env{codeview*}环境}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{codeview,codeview*}
+%   \begin{syntax}
+%     \tn{begin}\{codeview\}\oarg{外观选项}\Arg{盒子标题}
+%     .....
+%     \tn{end}\{codeview\}
+%     \tn{begin}\{codeview*\}\oarg{外观选项}\Arg{盒子标题}
+%     .....
+%     \tn{end}\{codeview*\}
+%   \end{syntax}
+%   使用环境内容排版带编号代码盒子。
+%   可以通过\Arg{盒子标题}为代码盒子设置标题。
+%
+%   \oarg{外观选项}中通过key-value方式设置代码盒子外观。
+%
+%   星号环境\texttt{codeview*}用于为代码盒子添加底线注释，
+%   此时，需要在\oarg{外观选项}中用
+%   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
+%
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
+%   key-value列表进行设置。
+% \end{function}
+%
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \begin{codeview}{代码标题}
+%       #include <stdio.h>
+%       #include <stdlib.h>
+%
+%       int main(void)
+%       {
+%           printf("Hello World!\n");
+%
+%           return 0;
+%       }
+%     \end{codeview}
+%   \end{Verbatim}
+%
+%   \codeset{pretitle=代码}
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \cvfile{代码标题}{test.c}
+%     \end{minipage}
+%   \end{center}
+%
+% \subsection{\tn{cvfile}和\tn{cvfile*}命令}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{\cvfile,\cvfile*}
+%   \begin{syntax}
+%     \tn{cvfile}  \oarg{外观选项} \Arg{盒子标题} \Arg{代码文件}
+%     \tn{cvfile*} \oarg{外观选项} \Arg{盒子标题} \Arg{代码文件}
+%   \end{syntax}
+%
+%   用于排版带编号代码盒子，源代码来自于\Arg{代码文件}，
+%   可以通过\Arg{盒子标题}为代码盒子设置标题。
+%
+%   \oarg{外观选项}中通过key-value方式设置代码盒子外观。
+%
+%   星号命令\texttt{cvfile*}用于为代码盒子添加底线注释，
+%   此时，需要在\oarg{外观选项}中用
+%   \kvopt{\meta{comments}}{\meta{底线注释}}选项提供\textbf{底线注释}内容。
+%
+%   代码盒子的外观也可以通过\tn{codeset}命令的逗号分隔
+%   key-value列表进行设置。
+% \end{function}
+%
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \cvfile*[comments=这是一个简单的C语言代码]{代码标题}{test.c}
+%   \end{Verbatim}
+%
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \cvfile*[comments=这是一个简单的C语言代码]{代码标题}{test.c}
+%     \end{minipage}
+%   \end{center}
+%
+% \section{选项说明}
+%
+%   \pkg{codebox}宏包提供了一系列选项，以设置代码盒子的外观样式。
+%   载入\pkg{codebox}宏包后，以下选项均可通过用户接口命令\tn{codeset}进行设置。
+%   当然，这些选项也可以通过各个环境或命令的\oarg{外观选项}进行设置。
+%
+% \subsection{代码引擎}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{minted}
+%   \begin{syntax}
+%     minted = <\TTF> \init{true}
+%   \end{syntax}
+%   \opt{minted} 用于设置代码排版引擎，如为\textbf{true}则使用\pkg{minted}宏包
+%   排版代码盒子中的内容，如为\textbf{false}则使用\pkg{listings}宏包排版
+%   代码盒子中的内容。默认值为\textbf{true}。
+% \end{function}
+%
+% \subsection{代码语言}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{lang}
+%   \begin{syntax}
+%     lang = \Arg{代码语言} \init{c}
+%   \end{syntax}
+%   \opt{lang} 用于设置代码语言，默认值为\textbf{c语言}。
+% \end{function}
+%
+% \subsection{代码名称}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{pretitle}
+%   \begin{syntax}
+%     pretitle = \Arg{代码名称} \init{Code}
+%   \end{syntax}
+%   \opt{pretitle} 用于代码编号前的代码名称前缀，默认值为\textbf{Code}。
+% \end{function}
+%
+% \subsection{代码样式}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{codestyle}
+%   \begin{syntax}
+%     codestyle = \Arg{代码样式} \init{codeblocks}
+%   \end{syntax}
+%   \opt{codestyle} 用于设置代码盒子中代码的样式，仅对\textbf{minted}
+%   引擎有效，默认值为\textbf{codeblocks}。
+% \end{function}
+%
+% \subsection{代码字号}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{codesize}
+%   \begin{syntax}
+%     codesize = \Arg{字号命令} \init{\small}
+%   \end{syntax}
+%   \opt{codesize} 用于设置代码盒子中代码的字号，仅对\textbf{minted}
+%   引擎有效，默认值为\textbf{\tn{small}}。
+% \end{function}
+%
+% \subsection{底线注释内容}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{comments}
+%   \begin{syntax}
+%     comments = \Arg{注释内容} \init{无}
+%   \end{syntax}
+%   \opt{commentf} 用于设置代码盒子底线注释的内容，
+%   默认值为\textbf{无}。
+% \end{function}
+%
+% \subsection{底线注释格式}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{commentf}
+%   \begin{syntax}
+%     commentf = \Arg{格式命令组} \init{\small\sffamily}
+%   \end{syntax}
+%   \opt{commentf} 用于设置代码盒子底线注释的格式，
+%   默认值为\textbf{\tn{small}\tn{sffamily}}。
+% \end{function}
+%
+% \subsection{代码行距}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{codestretch}
+%   \begin{syntax}
+%     codestretch = \Arg{浮点数} \init{1.0}
+%   \end{syntax}
+%   \opt{codestretch} 用于设置代码盒子内容(代码)的行距，仅对\textbf{minted}
+%   引擎有效，取浮点数。默认值为\textbf{1.0}。
+% \end{function}
+%
+% \subsection{行号间距}
+%
+% \begin{function}[added=2021-12-26,updated=2021-12-26]{linenumsep}
+%   \begin{syntax}
+%     linenumsep = \Arg{浮点数} \init{3.0}
+%   \end{syntax}
+%   \opt{linenumsep} 用于设置代码盒子行号与代码的间距，仅对\textbf{minted}
+%   引擎有效，取浮点数，单位是mm。默认值为\textbf{3.0}。
+% \end{function}
+%
+% \changes{v1.0.2}{2021/12/28}{添加cvcounter说明}
+%
+% \section{计数器}
+%
+% \begin{function}[added=2021-12-28,updated=2021-12-28]{cvcounter}
+%   \pkg{codebox}宏包提供了一个计数器\texttt{cvcounter}，
+%   当使用带编号环境\env{codeview}/\env{codeview*}和
+%   命令\tn{cvfile}/\tn{cvfile*}排版代码时，可以用于对代码盒子进行计数。
+%   默认情况下，如果存在\texttt{thechapter}计数器，则其父计数器设置为\texttt{chapter}
+%   否则将按全文统一计数。
+%
+%   可以使用类似\tn{renewcommand\{\tn{thecvcounter}\}\{\tn{thechapter.\tn{arabic\{cvcounter\}}}\}}
+%   的形式更改编号输出内容。
+% \end{function}
+%
+% \newpage
+% \section{排版样例}
+%
+% \pkg{codebox}宏包可用于需要语法高亮代码排版场合，
+% 以避免使用代码截图。代码盒子可以带/不带底线注释。
+%
+% \subsection{Java代码}
+% 可以使用\tn{codeset}命令设置代码语言。
+%
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \codeset{lang=java}
+%     \codefile{Java代码盒子}{hellojava.java}
+%   \end{Verbatim}
+%
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \codeset{lang=java}
+%       \codefile{Java代码盒子}{hellojava.java}
+%     \end{minipage}
+%   \end{center}
+%
+% \subsection{Python代码}
+% 还可以使用环境或命令的\oarg{外观选项}设置代码语言。
+%
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \cvfile[lang=python]{Python代码示例}{hellopy.py}
+%   \end{Verbatim}
+%
+%   \begin{center}
+% %     \begin{minipage}{0.85\textwidth}
+%       \cvfile[lang=python]{Python代码示例}{hellopy.py}
+%     \end{minipage}
+%   \end{center}
+%
+% \subsection{listings引擎}
+% 在选项中使用\kvopt{\meta{minted}}{\meta{false}}
+% 以使用\pkg{listings}宏包排版代码。
+%
+%   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
+%     \centering
+%     \cvfile[minted=false,lang=c]{C语言代码示例}{test.c}
+%   \end{Verbatim}
+%
+%   \begin{center}
+%     \begin{minipage}{0.85\textwidth}
+%       \cvfile[minted=false,lang=c]{C语言代码示例}{test.c}
+%     \end{minipage}
+%   \end{center}
+%
+%
+% \end{documentation}
+%
+% \StopEventually{}
+%
+% \begin{implementation}
+%
+% \section{代码实现}
+%
+% 该宏包使用 \LaTeX3 语法编写，依赖 \pkg{expl3} 环境，
+% 并需调用 \pkg{l3packages}、\pkg{tcolorbox}、\pkg{minted}
+% \pkg{listings}、\pkg{fontawesome5}等宏包。
+%
+% 按照 \LaTeX3 语法，代码中的空格、换行、回车与制表符会完全被忽略，
+% 而下划线“|_|”和冒号“|:|”则可作为一般字母使用。
+% 正常的空格可以使用“|~|”代替；至于 |~| 原来所表示的“带子”，
+% 则要用 \LaTeXe{} 的原始命令 \tn{nobreakspace} 代替。
+%
+% 以下代码中有一些形如 \textcolor[HTML]{2E3191}{\textsf{<*package>}}
+% 的标记，这是 \pkg{DocStrip} 中的“guard”，用来选择性地提取文件。
+% “\textsf{*}”和“\textsf{/}”分别表示该部分的开始和结束。不含
+% “\textsf{*}”和“\textsf{/}”的 guard 出现在行号右侧，它们用来确定
+% 单独一行代码的归属。这些 guard 的颜色深浅不一，用以明确嵌套关系。
+%
+% 另有若干形如 \textcolor[HTML]{AD1457}{\textsf{<@@=codebox>}} 的 guard，
+% 它们由 \pkg{l3docstrip} 定义，用来标识名字空间（模块）。
+%
+% \subsection{环境检测与准备}
+%
+%    \begin{macrocode}
+%<*package>
+%<@@=codebox>
+%    \end{macrocode}
+%
+% 载入必要的\LaTeX3 宏包
+%
+%    \begin{macrocode}
+\RequirePackage { xtemplate, l3keys2e, xparse }
+%    \end{macrocode}
+%
+% \changes{v1.0.1}{2021/12/26}{删除原\LaTeX3 版本检测代码}
+%
+% \subsection{载入其它宏包}
+%
+% 载入\pkg{fontawesome5}、\pkg{tcolorbox}、\pkg{amssymb}、
+% \pkg{xcolor}宏包
+%
+%    \begin{macrocode}
+\RequirePackage {fontawesome5, tcolorbox, varwidth, xcolor, etoolbox}
+%    \end{macrocode}
+%
+% 解决Expl3中\pkg{tcolorbox}和\pkg{tikz}附加库无法加载的
+% 的补丁(需要\pkg{etoolbox}宏包支持)
+%
+% \url{https://tex.stackexchange.com/questions/57424/using-of-usetikzlibrary-in-an-expl3-package-fails}
+%
+%    \begin{macrocode}
+\ExplSyntaxOff
+\patchcmd
+{\tcb@input@library@in}
+  {%
+   \input\tcbpkgprefix#1\relax%
+  }
+  {%
+    \@pushfilename
+    \input\tcbpkgprefix#1\relax%
+    \@popfilename
+  }
+  {}{}
+
+\patchcmd
+{\pgfutil@InputIfFileExists}
+  {\input #1}
+  {%
+    \@pushfilename
+    \xdef\@currname{#1}%
+    \input #1 %
+    \@popfilename
+  }
+  {}{}
+\ExplSyntaxOn
+%    \end{macrocode}
+%
+% \changes{v1.0.1}{2021/12/26}{minted2.6发布，删除原补丁代码}
+%
+% 载入\pkg{tcolorbox}和\pkg{tikz}附加库
+%
+%    \begin{macrocode}
+\tcbuselibrary{skins, xparse, breakable}
+\tcbuselibrary{minted,listings}
+\usetikzlibrary{shapes.geometric}
+%    \end{macrocode}
+%
+% \subsection{定义颜色}
+%
+%    \begin{macrocode}
+\definecolor{cvgrayc}{RGB}{247,247,247}
+\definecolor{cvgray}{RGB}{220,220,220}
+\definecolor{cvgrayb}{RGB}{153,153,153}
+\definecolor{cvblue}{RGB}{223,238,255}
+\definecolor{chengse}{RGB}{250,140,53}
+%    \end{macrocode}
+%
+% \subsection{代码盒子样式设计}
+%
+% 代码盒子lang样式
+%
+%    \begin{macrocode}
+\tcbset{%
+  skin=enhanced,
+  lang/.style={%
+    breakable,%
+    drop~shadow,%
+    colframe=gray!75!black,%
+    left=4.5mm,
+    enhanced,%
+    colframe=tcbcolback!60!black,%
+    colback=white,%
+    colbacktitle=tcbcolback!5!gray!10!white,%
+    fonttitle=\bfseries,%
+    coltitle=black,%
+    attach~boxed~title~to~top~center={%
+      yshift=-0.25mm-\tcboxedtitleheight/2,%
+      yshifttext=2mm-\tcboxedtitleheight/2%
+    },%
+    attach~boxed~title~to~top~left={%
+      xshift=1cm,%
+      yshift*=1mm-\tcboxedtitleheight%
+    },%
+    varwidth~boxed~title*=-3cm,%
+    boxed~title~style={%
+      frame~code={%
+        \path[fill=tcbcolback!30!black]([yshift=-1mm,xshift=-1mm]frame.north~west)%
+          arc[start~angle=0,end~angle=180,radius=1mm]([yshift=-1mm,xshift=1mm]frame.north~east)%
+          arc[start~angle=180,end~angle=0,radius=1mm];%
+        \path[left~color=tcbcolback!60!black,right~color=tcbcolback!60!black,
+          middle~color=tcbcolback!80!black]([xshift=-2mm]frame.north~west)%
+          --([xshift=2mm]frame.north~east)[rounded~corners=1mm]%
+          --([xshift=1mm,yshift=-1mm]frame.north~east)%
+          --(frame.south~east)%
+          --(frame.south~west)%
+          --([xshift=-1mm,yshift=-1mm]frame.north~west)[sharp~corners]%
+          --cycle;%
+      },%
+      interior~engine=empty%
+    },%
+    overlay={%
+      \begin{tcbclipinterior}
+        \fill[tcbcolback!80!black] (frame.south~west) rectangle
+         ([xshift=5mm]frame.north~west);
+      \end{tcbclipinterior}%
+    },
+  }%
+}%
+%    \end{macrocode}
+%
+% 代码盒子cv样式
+%
+%    \begin{macrocode}
+\tcbset{%
+  skin=enhanced,
+  cv/.style={
+    boxrule=0.4mm,
+    breakable,
+    top=0mm,
+    boxsep=1mm,
+    drop~shadow,
+    attach~boxed~title~to~top,
+    colframe=blue!75!black,
+    left=4.5mm,
+    right=0mm,
+    enhanced,
+    colframe=tcbcolback!60!black,
+    colback=white,
+    colbacktitle=cvgray,
+    fonttitle=\ttfamily,
+    coltitle=black,
+    underlay~boxed~title = {
+      \begin{tcbclipinterior}
+        \fill[cvblue] (frame.south~west) rectangle ([xshift=5.0mm,yshift=0mm]frame.north~west);
+      \end{tcbclipinterior}
+    }
+  }
+}%
+%    \end{macrocode}
+%
+% \subsection{内部变量声明}
+%
+% \begin{variable}{\l_@@_minted_bool,
+% \l_@@_comment_bool,
+% \l_@@_language_tl,
+% \l_@@_code_style_tl,
+% \l_@@_code_fontsize_tl,
+% \l_@@_code_name_tl,
+% \l_@@_comment_contents_tl,
+% \l_@@_comment_format_tl,
+% \l_@@_baseline_stretch_fp,
+% \l_@@_linenumber_sep_fp
+%  }
+% 定义变量。
+%
+%    \begin{macrocode}
+\bool_new:N   \l_@@_minted_bool
+\bool_new:N   \l_@@_comment_bool
+
+\tl_new:N     \l_@@_language_tl
+\tl_new:N     \l_@@_code_style_tl
+\tl_new:N     \l_@@_code_fontsize_tl
+\tl_new:N     \l_@@_code_name_tl
+\tl_new:N     \l_@@_comment_contents_tl
+\tl_new:N     \l_@@_comment_format_tl
+\fp_new:N     \l_@@_baseline_stretch_fp
+\fp_new:N     \l_@@_linenumber_sep_fp
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsection{选项处理}
+%
+% 定义 |codebox| 键值类。
+%    \begin{macrocode}
+\keys_define:nn { codebox }
+  {
+%    \end{macrocode}
+%
+% \begin{macro}{minted}
+% 是否使用minted宏包排版代码，默认为true。
+%    \begin{macrocode}
+    minted .bool_set:N = \l_@@_minted_bool,
+    minted .default:n = true,
+    minted .initial:n = true,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{lang}
+% 设置排版代码语言，默认为c。
+%    \begin{macrocode}
+    lang .tl_set:N = \l_@@_language_tl,
+    lang .initial:n = c,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{pretitle}
+% 代码名称前缀
+%    \begin{macrocode}
+    pretitle .tl_set:N = \l_@@_code_name_tl,
+    pretitle .initial:n = Code,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{codestyle}
+% 代码样式
+%    \begin{macrocode}
+    codestyle .tl_set:N = \l_@@_code_style_tl,
+    codestyle .initial:n = default,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{codesize}
+% 代码字号
+%    \begin{macrocode}
+    codesize .tl_set:N = \l_@@_code_fontsize_tl,
+    codesize .initial:n = \small,
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \changes{v1.0.2}{2021/12/28}{添加cvcounter说明}
+% \begin{macro}{comments}
+% 注释格式
+%    \begin{macrocode}
+    comments .tl_set:N = \l_@@_comment_contents_tl,
+    comments .initial:n = {},
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{commentf}
+% 注释格式
+%    \begin{macrocode}
+    commentf .tl_set:N = \l_@@_comment_format_tl,
+    commentf .initial:n = \small\sffamily,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{codestretch}
+% 基线伸展系数
+%    \begin{macrocode}
+    codestretch .code:n = { \fp_set:Nn \l_@@_baseline_stretch_fp { #1 }
+                         },
+    codestretch .initial:n = 1.0,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{linenumsep}
+% 行号与文本之间的距离(单位：mm)
+%    \begin{macrocode}
+    linenumsep .fp_set:N  = \l_@@_linenumber_sep_fp,
+    linenumsep .initial:n = 3.00,
+%    \end{macrocode}
+% \end{macro}
+%
+% 处理未知选项。
+%    \begin{macrocode}
+    unknown .code:n = { \@@_error:n { unknown-option } }
+  }
+\msg_new:nnn { codebox } { unknown-option }
+  { package~ option~ "\l_keys_key_tl"~ is~ unknown. }
+%    \end{macrocode}
+%
+% \subsection{选项设置用户接口}
+%
+% \begin{macro}{\codeset}
+%
+% 选项设置用户接口。
+%
+%    \begin{macrocode}
+\NewDocumentCommand \codeset { m }
+  { \keys_set:nn { codebox } {#1} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{内部函数}
+%
+% \begin{macro}{\@@_set_counter_parent:}
+%
+% 设置代码编号计数器的父计数器。
+%
+%    \begin{macrocode}
+\cs_new:Npn \@@_set_counter_parent:
+  {
+    \ifdef{\thechapter}
+      {
+        \newcounter{cvcounter}[chapter]%
+      }{
+        \newcounter{cvcounter}%[section]%
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v1.0.1}{2021/12/26}{调整minted style选项为参数实现}
+% \changes{v1.0.2}{2021/12/28}{将minted/listings的参数设置独立为函数}
+%
+% \begin{macro}{\@@_minted_engine_tcbset:n #1}
+% 设置代码盒子minted宏包参数。
+%
+%    \begin{macrocode}
+\cs_new:Npn \@@_minted_engine_tcbset:n #1
+  {
+    \tcbset{
+      listing~engine=minted,%
+      minted~style=#1,
+      minted~options={%
+        autogobble,
+        breaklines,%
+        fontsize=\tl_use:N \l_@@_code_fontsize_tl,%
+        baselinestretch=\fp_eval:n { \l_@@_baseline_stretch_fp },
+        breaksymbolleft={},%
+        linenos,%
+        numbersep=\fp_eval:n { \l_@@_linenumber_sep_fp }~mm,
+      },%
+      minted~language=\tl_use:N \l_@@_language_tl%
+    }
+  }
+\cs_generate_variant:Nn \@@_minted_engine_tcbset:n {V}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_listings_engine_tcbset:}
+% 设置代码盒子listings宏包参数。
+%
+%    \begin{macrocode}
+\cs_new:Npn \@@_listings_engine_tcbset:
+  {
+    \lstset{% general command to set parameter(s)
+      basicstyle=\ttfamily\tl_use:N \l_@@_code_fontsize_tl, % print whole listing small
+      keywordstyle=\color{chengse}\bfseries,%
+      identifierstyle=, % nothing happens
+      breaklines=true,
+      commentstyle=\itshape\color{gray},
+      stringstyle=\ttfamily, % typewriter type for strings
+      numbers=left,%
+      numberstyle=\tl_use:N \l_@@_code_fontsize_tl\sffamily\color[rgb]{0.5,0.5,1.0},%
+    }%
+    \tcbset{
+      overlay={%
+        \begin{tcbclipinterior}
+          \fill[tcbcolback!80!black] (frame.south~west) rectangle
+                                     ([xshift=5mm]frame.north~west);
+        \end{tcbclipinterior}%
+      },%
+      listing~options={
+        language=\tl_use:N \l_@@_language_tl,
+        numbersep=\fp_eval:n { \l_@@_linenumber_sep_fp }~mm,
+        %linebackgroundcolor={\ifodd\value{lstnumber}\color{cvgray}\fi}
+      }
+    }%
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_code_engine_tcbset:}
+% 设置代码盒子引擎宏包参数。
+%
+%    \begin{macrocode}
+\cs_new:Npn \@@_code_engine_tcbset:
+  {
+    \bool_if:NTF \l_@@_minted_bool
+      {
+        \@@_minted_engine_tcbset:V \l_@@_code_style_tl
+      }{
+        \@@_listings_engine_tcbset:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_comment_tcbset:}
+% 设置代码盒子底线注释。
+%
+%    \begin{macrocode}
+\cs_new:Npn \@@_comment_tcbset:
+  {
+    \bool_if:NTF { \l_@@_comment_bool }
+    {
+      \tcbset{%
+        listing~and~comment,%
+        colbacklower=tcbcolback!5!yellow!10!white,%
+        collower=tcbcolback!60!black,%
+        comment={\tl_use:N \l_@@_comment_format_tl~
+                 \tl_use:N \l_@@_comment_contents_tl},%
+      }
+    }{
+      \tcbset{ listing~only,}
+    }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v1.0.1}{2021/12/27}{修订代码盒子前多一个逗号的问题}
+%
+% \subsection{不计数代码盒子用户接口}
+%
+%  定义不带底线注释的代码盒子环境\env{codebox}
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{ codebox }{O{} m }
+  {
+    \bool_set_false:N  \l_@@_comment_bool
+    \group_begin:
+    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{lang, title={#2} }%
+    \tcblisting{}
+  }{
+    \endtcblisting
+    \group_end:
+  }
+%    \end{macrocode}
+%
+%  定义带底线注释的代码盒子环境\env{codebox*}
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{ codebox* }{O{} m }
+  {
+    \bool_set_false:N  \l_@@_comment_bool
+    \group_begin:
+    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{lang, title={#2} }%
+    \tcblisting{}
+  }{
+    \endtcblisting
+    \group_end:
+  }
+%    \end{macrocode}
+%
+%  定义带/不带底线注释的从文件读取内容的命令\tn{codefile}/\tn{codefile*}
+%
+%    \begin{macrocode}
+\NewDocumentCommand \codefile { s O{} m m }
+  {
+    \IfBooleanTF{#1}
+      {
+        \bool_set_true:N  \l_@@_comment_bool
+      }{
+        \bool_set_false:N \l_@@_comment_bool
+      }
+
+    \group_begin:
+    \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{
+      lang,
+      title={#3},
+      listing~file={#4},
+    }%
+    \tcbinputlisting{  }
+    \group_end:
+  }
+%    \end{macrocode}
+%
+% \subsection{计数代码盒子用户接口}
+%
+%  设置代码盒子计算器
+%
+%    \begin{macrocode}
+\@@_set_counter_parent:
+%    \end{macrocode}
+%
+% \changes{v1.0.2}{2021/12/28}{为计数器两端添加\tn{nobreakspace}}
+%
+%  定义不带底线注释的代码盒子环境\env{codeview}
+%
+%    \begin{macrocode}
+\DeclareTCBListing[use~counter=cvcounter]{codeviewaux}{m}
+  {
+    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+  }
+\NewDocumentEnvironment{ codeview }{O{} m }
+  {
+    \bool_set_false:N  \l_@@_comment_bool
+    \group_begin:
+    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{
+      cv,
+      overlay~unbroken~and~first ={
+        \begin{tcbclipinterior}
+          \node[inner~sep=0pt,anchor=north~east,yshift=-3pt,xshift=-5pt,text=cvgrayb]
+            at (frame.north~east){
+              \ttfamily\faFile*\ \faCode\ \faCodeBranch\ \faCopy\ \faExternalLink*\
+              \MakeUppercase{\tl_use:N \l_@@_language_tl}
+            };
+        \end{tcbclipinterior}
+      }
+    }%
+    \codeviewaux{#2}
+  }{
+    \endcodeviewaux
+    \group_end:
+  }
+%    \end{macrocode}
+%
+%  定义带底线注释的代码盒子环境\env{codeview*}
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{ codeview* }{O{} m }
+  {
+    \bool_set_true:N  \l_@@_comment_bool
+    \group_begin:
+    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{
+      cv,
+      overlay~unbroken~and~first ={
+        \begin{tcbclipinterior}
+          \node[inner~sep=0pt,anchor=north~east,yshift=-3pt,xshift=-5pt,text=cvgrayb]
+            at (frame.north~east){
+              \ttfamily\faFile*\ \faCode\ \faCodeBranch\ \faCopy\ \faExternalLink*\ 
+              \MakeUppercase{\tl_use:N \l_@@_language_tl}
+            };
+        \end{tcbclipinterior}
+      }
+    }%
+    \codeviewaux{#2}
+  }{
+    \endcodeviewaux
+    \group_end:
+  }
+%    \end{macrocode}
+%
+%  定义带/不带底线注释的从文件读取内容的命令\tn{cvfile}/\tn{cvfile*}
+%
+%    \begin{macrocode}
+\DeclareTCBInputListing[use~counter=cvcounter]{\langfileaux}{m}
+  {
+    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+  }
+\NewDocumentCommand \cvfile { s O{} m m }
+  {
+    \IfBooleanTF{#1}
+      {
+        \bool_set_true:N  \l_@@_comment_bool
+      }{
+        \bool_set_false:N \l_@@_comment_bool
+      }
+
+    \group_begin:
+    \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
+    \@@_code_engine_tcbset:
+    \@@_comment_tcbset:
+    \tcbset{
+      cv,
+      listing~file={#4},
+      overlay~unbroken~and~first ={
+        \begin{tcbclipinterior}
+          \node[inner~sep=0pt,anchor=north~east,yshift=-3pt,xshift=-5pt,text=cvgrayb]
+            at (frame.north~east){
+              \ttfamily\faFile*\ \faCode\ \faCodeBranch\ \faCopy\ \faExternalLink*\ 
+              \MakeUppercase{\tl_use:N \l_@@_language_tl}
+            };
+        \end{tcbclipinterior}
+      }
+    }%
+    \langfileaux{#3}
+    \group_end:
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \end{implementation}
+%
+% \Finale
+%
+\endinput

@@ -1,0 +1,395 @@
+\documentclass{ctxdoc-en}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xcolor-material}
+\usepackage{codebox}
+
+% \renewcommand{\thecvcounter}{\thesection.\arabic{cvcounter}}
+\NewDocumentCommand{\init}{+v}{\hspace{\fill}Init~=~\textcolor{blue}{\bfseries#1}}
+\DeclareDocumentCommand\opt{m}{\texttt{#1}}
+\DeclareDocumentCommand\kvopt{mm}
+  {\texttt{#1\breakablethinspace=\breakablethinspace#2}}
+\def\breakablethinspace{\hskip 0.16667em\relax}
+
+\title{\bfseries\pkg{codebox}：programming code box}
+\author{Nan Geng\\ \url{nangeng@nwafu.edu.cn}}
+\date{2021/12/27\qquad v1.0.1\thanks{\url{https://github.com/registor/codebox}}
+\thanks{\url{https://gitee.com/nwafu_nan/codebox}}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\pkg{codebox} is a \pkg{tcolorbox}-based package developed with \LaTeX3,
+which provides environments \env{codebox} and \env{codeview}, and macros
+\tn{codefile} and \tn{cvfile} for typsetting programming source code box.
+
+The environments create codebox with it's body and
+macros is used to read in the source code file and output is in the codebox.
+
+The starred environments and macros are also provided
+to get codebox with comments at the bottom of box.
+
+All codebox style can be setted by \tn{codeset} macro
+or environment's and macro's key-value \oarg{options}.
+
+\end{abstract}
+
+\tableofcontents
+
+\section{introduction}
+
+\pkg{codebox} is a \LaTeX3 package for typesetting programming source code box.
+
+Both \env{codebox} and \env{codeview} environment are provided with enironment body.
+At the same time, both \tn{codefile} and \tn{cvfile} macros are created
+for reading source code file.
+
+The starred environments(\env{codebox*} and \env{codeview*}) and
+macros(\tn{codefile*} and \tn{cvfile*}) are also provided
+to get codebox with comments at the bottom of box.
+
+\section{interface}
+
+\subsection{\env{codebox} and \env{codebox*} environments}
+
+\begin{function}[added=2021-12-25,updated=2021-12-25]{codebox,codebox*}
+  \begin{syntax}
+    \tn{begin}\{codebox\}\oarg{options}\Arg{codebox title}
+    .....
+    \tn{end}\{codebox\}
+    \tn{begin}\{codebox*\}\oarg{options}\Arg{codebox title}
+    .....
+    \tn{end}\{codebox*\}
+  \end{syntax}
+  Typesetting codebox with environment body.
+  You can set the title of the codebox with \Arg{codebox title}.
+
+  The appearance of the codebox is set by key-value in \oarg{options}.
+
+  The starred environment \env{codebox*} is used to add comments at the bottom of the codebox,
+  note that this needs to be done with \kvopt{\meta{comments}}{\meta{texts}} in \oarg{options}.
+
+  Of course the key-value \oarg{options} can alse be set
+  via the comma-separated key-value list of the \tn{codeset} macro.
+\end{function}
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \begin{codebox}{CodeBox Title}
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        printf("Hello World!\n");
+
+        return 0;
+    }
+  \end{codebox}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \begin{codebox}{CodeBox Title}
+      #include <stdio.h>
+      #include <stdlib.h>
+
+      int main(void)
+      {
+          printf("Hello World!\n");
+
+          return 0;
+      }
+    \end{codebox}
+  \end{minipage}
+\end{center}
+
+\subsection{\tn{codefile} and \tn{codefile*} macros}
+
+\begin{function}[added=2021-12-25,updated=2021-12-25]{\codefile,\codefile*}
+  \begin{syntax}
+    \tn{codefile}  \oarg{options} \Arg{codebox title} \Arg{code file}
+    \tn{codefile*} \oarg{options} \Arg{codebox title} \Arg{code file}
+  \end{syntax}
+  Typesetting codebox from a source code file.
+  You can set the title of the codebox with \Arg{codebox title}.
+
+  The appearance of the codebox is set by key-value in \oarg{options}.
+
+  The starred environment \tn{codefile*} is used to add comments at the bottom of the codebox,
+  note that this needs to be done with \kvopt{\meta{comments}}{\meta{texts}} in \oarg{options}.
+
+  Of course the key-value \oarg{options} can alse be set
+  via the comma-separated key-value list of the \tn{codeset} macro.
+\end{function}
+\newpage
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \codefile{CodeBox Title}{test.c}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \codefile{CodeBox Title}{test.c}
+  \end{minipage}
+\end{center}
+
+\subsection{\env{codeview} and \env{codeview*} environments}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{codeview,codeview*}
+  \begin{syntax}
+    \tn{begin}\{codeview\}\oarg{options}\Arg{codeview title}
+    .....
+    \tn{end}\{codeview\}
+    \tn{begin}\{codeview*\}\oarg{options}\Arg{codeview title}
+    .....
+    \tn{end}\{codeview*\}
+  \end{syntax}
+  Typesetting code viewer with environment body.
+  You can set the title of the code viewer with \Arg{codeview title}.
+
+  The appearance of the code viewer is set by key-value in \oarg{options}.
+
+  The starred environment \env{codeview*} is used to add comments at the bottom of the codebox,
+  note that this needs to be done with \kvopt{\meta{comments}}{\meta{texts}} in \oarg{options}.
+
+  Of course the key-value \oarg{options} can alse be set
+  via the comma-separated key-value list of the \tn{codeset} macro.
+\end{function}
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \begin{codeview}{CodeViewer Title}
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        printf("Hello World!\n");
+
+        return 0;
+    }
+  \end{codeview}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \begin{codeview}{CodeViewer Title}
+      #include <stdio.h>
+      #include <stdlib.h>
+
+      int main(void)
+      {
+          printf("Hello World!\n");
+
+          return 0;
+      }
+    \end{codeview}
+  \end{minipage}
+\end{center}
+
+\subsection{\tn{cvfile} and \tn{cvfile*} macros}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{\cvfile,\cvfile*}
+  \begin{syntax}
+    \tn{cvfile}  \oarg{options} \Arg{codeview title} \Arg{code file}
+    \tn{cvfile*} \oarg{options} \Arg{codeview title} \Arg{code file}
+  \end{syntax}
+  Typesetting code viewer from a source code file.
+  You can set the title of the code viewer with \Arg{codeview title}.
+
+  The appearance of the code viewer is set by key-value in \oarg{options}.
+
+  The starred environment \tn{vcfile*} is used to add comments at the bottom of the codebox,
+  note that this needs to be done with \kvopt{\meta{comments}}{\meta{texts}} in \oarg{options}.
+
+  Of course the key-value \oarg{options} can alse be set
+  via the comma-separated key-value list of the \tn{codeset} macro.
+\end{function}
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \cvfile*[comments=this is a simple C code]{CodeViewer Title}{test.c}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \cvfile*[comments=this is a simple C code]{CodeViewer Title}{test.c}
+  \end{minipage}
+\end{center}
+
+\section{Options}
+
+The \pkg{codebox} package provides a number of options to set the style of the codebox.
+The following options can be set with \tn{codeset} macro.
+Also, these options can be set with the all environment's
+or command's \oarg{options}.
+
+\subsection{code engine}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{minted}
+  \begin{syntax}
+    minted = <\TTF> \init{true}
+  \end{syntax}
+  \opt{minted} is used to set code highlight engine, if it is \textbf{true} then
+  the \pkg{minted} package is used, if it is \textbf{false} then
+  the \pkg{listings} package is used. The default is \textbf{true}.
+\end{function}
+
+\subsection{language}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{lang}
+  \begin{syntax}
+    lang = \Arg{source code language} \init{C}
+  \end{syntax}
+  \opt{lang} is used to set source code language.
+  The default is \textbf{C}.
+\end{function}
+
+\subsection{title prefix}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{pretitle}
+  \begin{syntax}
+    pretitle = \Arg{title prefix} \init{Code}
+  \end{syntax}
+  \opt{pretitle} is used to set prefix of code counter.
+  The default is \textbf{Code}。
+\end{function}
+
+\subsection{code highlight style}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{codestyle}
+  \begin{syntax}
+    codestyle = \Arg{highlight style} \init{codeblocks}
+  \end{syntax}
+  \opt{codestyle} is used to set code highlight style, valid only for the \pkg{minted} engine.
+  The default is \textbf{codeblocks}.
+\end{function}
+
+\subsection{code fontsize}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{codesize}
+  \begin{syntax}
+    codesize = \Arg{fontsize macro} \init{\small}
+  \end{syntax}
+  \opt{codesize} is used to set code fontsize, valid only for \pkg{minted} engine.
+   The default is\textbf{\tn{small}}.
+\end{function}
+
+\subsection{comment contents}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{comments}
+  \begin{syntax}
+    comments = \Arg{texts} \init{nothing}
+  \end{syntax}
+  \opt{comments} is used to set comment contents.
+   The default is \textbf{nothing}.
+\end{function}
+
+\subsection{comment format}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{commentf}
+  \begin{syntax}
+    commentf = \Arg{format macros} \init{\small\sffamily}
+  \end{syntax}
+  \opt{commentf} is used to set comment format at codebox bottom.
+  The default is \textbf{\tn{small}\tn{sffamily}}.
+\end{function}
+
+\subsection{code baseline stretch}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{codestretch}
+  \begin{syntax}
+    codestretch = \Arg{float number} \init{1.0}
+  \end{syntax}
+  \opt{codestretch} is used to set code baseline stretch, valid only for \pkg{minted} engine.
+  The default is\textbf{1.0}.
+\end{function}
+
+\subsection{seperation between line number and code}
+
+\begin{function}[added=2021-12-26,updated=2021-12-26]{linenumsep}
+  \begin{syntax}
+    linenumsep = \Arg{float number} \init{3.0}
+  \end{syntax}
+  \opt{linenumsep} is used to set the seperation between line number and code,
+  valid only for \pkg{minted} engine.
+  Note the unit is mm.
+  The default is\textbf{3.0}.
+\end{function}
+
+\section{The counter}
+
+\begin{function}[added=2021-12-28,updated=2021-12-28]{cvconuter}
+  The \pkg{codebox} package provides a \texttt{cvcounter} counter 
+  that can be used to count code boxes with environment \env{codeview}/\env{codeview*}
+  and the command \tn{cvfile}/\tn{cvfile*}. 
+
+  By default, if \tn{thechapter} exists, its parent counter is set to \textbf{chapter}
+  otherwise it will be counted uniformly by full text. 
+
+  You can use something like
+  \tn{renewcommand\{\tn{thecvcounter}\}\{\tn{thechapter.\tn{arabic\{cvcounter\}}}\}}
+  to change the numbered output.
+\end{function}
+
+\section{Examples}
+
+The \pkg{codebox} package can be used in situations
+where the highlight programming source code needs to be typeset
+to avoid the use of screenshots.
+Code box can be with or without underline comments.
+
+\newpage
+
+\subsection{Java code}
+The language can be set with \tn{codeset} macro.
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \codeset{lang=java}
+  \codefile{Java CodeBox}{hellojava.java}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \codeset{lang=java}
+    \codefile{Java CodeBox}{hellojava.java}
+  \end{minipage}
+\end{center}
+
+\subsection{Python code}
+The language can be set with \opt{options}.
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \cvfile[lang=python]{Python CodeBox}{hellopy.py}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \cvfile[lang=python]{Python CodeBox}{hellopy.py}
+  \end{minipage}
+\end{center}
+
+\newpage
+
+\subsection{listings engine}
+\pkg{listings} engine can be set with \kvopt{\meta{minted}}{\meta{false}}.
+
+\begin{Verbatim}[frame=none,numbers=left,gobble=2]
+  \centering
+  \cvfile[minted=false,lang=c]{C CodeBox}{test.c}
+\end{Verbatim}
+
+\begin{center}
+  \begin{minipage}{0.85\textwidth}
+    \cvfile[minted=false,lang=c]{C CodeBox}{test.c}
+  \end{minipage}
+\end{center}
+
+\end{document}
