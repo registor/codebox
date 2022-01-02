@@ -180,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{291}
+% \CheckSum{295}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -485,7 +485,7 @@ Copyright and Licence
 %   引擎有效，取浮点数，单位是mm。默认值为\textbf{3.0}。
 % \end{function}
 %
-% \changes{v1.0.2}{2021/12/28}{添加cvcounter说明}
+% \changes{v1.0.2}{2021/12/28}{添加cvcounter使用说明}
 %
 % \section{计数器}
 %
@@ -816,8 +816,6 @@ Copyright and Licence
 %    \end{macrocode}
 % \end{macro}
 %
-%
-% \changes{v1.0.2}{2021/12/28}{添加cvcounter说明}
 % \begin{macro}{comments}
 % 注释格式
 %    \begin{macrocode}
@@ -873,6 +871,8 @@ Copyright and Licence
 %
 % \subsection{内部函数}
 %
+% \changes{v1.0.2}{2022/1/2}{修改按章编号时cvcounter的编号方式}
+%
 % \begin{macro}{\@@_set_counter_parent:}
 %
 % 设置代码编号计数器的父计数器。
@@ -883,6 +883,7 @@ Copyright and Licence
     \ifdef{\thechapter}
       {
         \newcounter{cvcounter}[chapter]%
+        \renewcommand{\thecvcounter}{\thechapter.\arabic{cvcounter}}
       }{
         \newcounter{cvcounter}%[section]%
       }
