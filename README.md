@@ -43,7 +43,7 @@ Contributing
 Copyright and Licence
 ---------------------
 
-    Copyright (C) 2020-2021 by Nan Geng <nangeng@nwafu.edu.cn>
+    Copyright (C) 2020-2022 by Nan Geng <nangeng@nwafu.edu.cn>
     ----------------------------------------------------------------------
 
     This work may be distributed and/or modified under the
