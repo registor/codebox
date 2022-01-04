@@ -148,7 +148,7 @@ Copyright and Licence
 %</internal>
 %<package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<package>\RequirePackage{expl3}
-%<+package>\GetIdInfo$Id: codebox.dtx 1.0.2 2022-01-02 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
+%<+package>\GetIdInfo$Id: codebox.dtx 1.0.3 2022-01-04 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
 %<package>  {Code Box with tcolorbox and minted/listings.}
 %<package>\ProvidesExplPackage{\ExplFileName}
 %<package>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -180,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{295}
+% \CheckSum{302}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -485,6 +485,18 @@ Copyright and Licence
 %   引擎有效，取浮点数，单位是mm。默认值为\textbf{3.0}。
 % \end{function}
 %
+% \changes{v1.0.3}{2022/1/4}{添加label引用标签选项的使用说明}
+%
+% \subsection{引用标签}
+%
+% \begin{function}[added=2022-1-4,updated=2022-1-4]{label}
+%   \begin{syntax}
+%     label = \Arg{引用标签名称} \init{无}
+%   \end{syntax}
+%   \opt{label} 用于设置带编号代码盒子的引用标签，
+%   默认值为\textbf{无}。
+% \end{function}
+%
 % \changes{v1.0.2}{2021/12/28}{添加cvcounter使用说明}
 %
 % \section{计数器}
@@ -524,15 +536,17 @@ Copyright and Licence
 %
 % \subsection{Python代码}
 % 还可以使用环境或命令的\oarg{外观选项}设置代码语言。
+% 当然，也可以通过使用\opt{label}选项为编号代码添加引用标签，
+% 并通过\tn{ref}命令引用该标签，如代码\ref{code-test}所示。
 %
 %   \begin{Verbatim}[frame=none,numbers=left,gobble=5]
 %     \centering
-%     \cvfile[lang=python]{Python代码示例}{hellopy.py}
+%     \cvfile[lang=python,label=code-test]{Python代码示例}{hellopy.py}
 %   \end{Verbatim}
 %
 %   \begin{center}
 % %     \begin{minipage}{0.85\textwidth}
-%       \cvfile[lang=python]{Python代码示例}{hellopy.py}
+%       \cvfile[lang=python,label=code-test]{Python代码示例}{hellopy.py}
 %     \end{minipage}
 %   \end{center}
 %
@@ -747,10 +761,13 @@ Copyright and Licence
 % \l_@@_code_name_tl,
 % \l_@@_comment_contents_tl,
 % \l_@@_comment_format_tl,
+% \l_@@_label_name_tl,
 % \l_@@_baseline_stretch_fp,
 % \l_@@_linenumber_sep_fp
 %  }
 % 定义变量。
+%
+% \changes{v1.0.3}{2022/1/4}{增加\tn{\_@@_label_name_tl}变量}
 %
 %    \begin{macrocode}
 \bool_new:N   \l_@@_minted_bool
@@ -762,6 +779,7 @@ Copyright and Licence
 \tl_new:N     \l_@@_code_name_tl
 \tl_new:N     \l_@@_comment_contents_tl
 \tl_new:N     \l_@@_comment_format_tl
+\tl_new:N     \l_@@_label_name_tl
 \fp_new:N     \l_@@_baseline_stretch_fp
 \fp_new:N     \l_@@_linenumber_sep_fp
 %    \end{macrocode}
@@ -846,6 +864,16 @@ Copyright and Licence
 %    \begin{macrocode}
     linenumsep .fp_set:N  = \l_@@_linenumber_sep_fp,
     linenumsep .initial:n = 3.00,
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v1.0.3}{2022/1/4}{增加引用标签label选项}
+%
+% \begin{macro}{label}
+% 注释格式
+%    \begin{macrocode}
+    label .tl_set:N = \l_@@_label_name_tl,
+    label .initial:n = {},
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1065,6 +1093,7 @@ Copyright and Licence
 %    \end{macrocode}
 %
 % \changes{v1.0.2}{2021/12/28}{为计数器两端添加\tn{nobreakspace}}
+% \changes{v1.0.3}{2022/1/4}{为带编号代码盒子添加引用标签选项}
 %
 %  定义不带底线注释的代码盒子环境\env{codeview}
 %
@@ -1072,6 +1101,7 @@ Copyright and Licence
 \DeclareTCBListing[use~counter=cvcounter]{codeviewaux}{m}
   {
     title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+    label=\tl_use:N \l_@@_label_name_tl,
   }
 \NewDocumentEnvironment{ codeview }{O{} m }
   {
@@ -1098,6 +1128,7 @@ Copyright and Licence
     \group_end:
   }
 %    \end{macrocode}
+%
 %
 %  定义带底线注释的代码盒子环境\env{codeview*}
 %
@@ -1134,6 +1165,7 @@ Copyright and Licence
 \DeclareTCBInputListing[use~counter=cvcounter]{\langfileaux}{m}
   {
     title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+    label={\tl_use:N \l_@@_label_name_tl},
   }
 \NewDocumentCommand \cvfile { s O{} m m }
   {

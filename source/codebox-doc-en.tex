@@ -14,7 +14,7 @@
 
 \title{\bfseries\pkg{codebox}：programming code box}
 \author{Nan Geng\\ \url{nangeng@nwafu.edu.cn}}
-\date{2022/01/02\qquad v1.0.2\thanks{\url{https://github.com/registor/codebox}}
+\date{2022/01/04\qquad v1.0.3\thanks{\url{https://github.com/registor/codebox}}
 \thanks{\url{https://gitee.com/nwafu_nan/codebox}}}
 
 \begin{document}
@@ -322,6 +322,18 @@ or command's \oarg{options}.
   The default is\textbf{3.0}.
 \end{function}
 
+\subsection{label}
+
+\begin{function}[added=2022-1-4,updated=2022-1-4]{label}
+  \begin{syntax}
+    label = \Arg{label name} \init{nothing}
+  \end{syntax}
+  \opt{label} is used to set \tn{ref} 's label name,
+  it is for \env{codeview}/\env{codeview*} and \tn{cvfile}/\tn{cvfile*}
+  and valid only for \pkg{mined} engine.
+  The default is \textbf{nothing}.
+\end{function}
+
 \section{The counter}
 
 \begin{function}[added=2021-12-28,updated=2021-12-28]{cvconuter}
@@ -363,16 +375,17 @@ The language can be set with \tn{codeset} macro.
 \end{center}
 
 \subsection{Python code}
-The language can be set with \opt{options}.
+The language can be set with \opt{options}, of course you can label and ref it
+such as code \ref{code-test}.
 
 \begin{Verbatim}[frame=none,numbers=left,gobble=2]
   \centering
-  \cvfile[lang=python]{Python CodeBox}{hellopy.py}
+  \cvfile[lang=python,label=code-test]{Python CodeBox}{hellopy.py}
 \end{Verbatim}
 
 \begin{center}
   \begin{minipage}{0.85\textwidth}
-    \cvfile[lang=python]{Python CodeBox}{hellopy.py}
+    \cvfile[lang=python,label=code-test]{Python CodeBox}{hellopy.py}
   \end{minipage}
 \end{center}
 
