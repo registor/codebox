@@ -180,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{302}
+% \CheckSum{313}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -491,10 +491,12 @@ Copyright and Licence
 %
 % \begin{function}[added=2022-1-4,updated=2022-1-4]{label}
 %   \begin{syntax}
-%     label = \Arg{引用标签名称} \init{无}
+%     label = \Arg{引用标签名称} \init{空}
 %   \end{syntax}
 %   \opt{label} 用于设置带编号代码盒子的引用标签，
-%   默认值为\textbf{无}。
+%   该选项仅对\env{codeview}/\env{codeview*}环境
+%   或\tn{cvfile}/\tn{cvfile*}命令有效。
+%   默认值为\textbf{空}。
 % \end{function}
 %
 % \changes{v1.0.2}{2021/12/28}{添加cvcounter使用说明}
@@ -1101,7 +1103,6 @@ Copyright and Licence
 \DeclareTCBListing[use~counter=cvcounter]{codeviewaux}{m}
   {
     title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
-    label=\tl_use:N \l_@@_label_name_tl,
   }
 \NewDocumentEnvironment{ codeview }{O{} m }
   {
@@ -1110,6 +1111,12 @@ Copyright and Licence
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
+    \tl_if_empty:NF \l_@@_label_name_tl
+    {
+      \tcbset{
+        label=\tl_use:N \l_@@_label_name_tl,
+      }
+    }
     \tcbset{
       cv,
       overlay~unbroken~and~first ={
@@ -1140,6 +1147,12 @@ Copyright and Licence
     \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
+    \tl_if_empty:NF \l_@@_label_name_tl
+    {
+      \tcbset{
+        label=\tl_use:N \l_@@_label_name_tl,
+      }
+    }
     \tcbset{
       cv,
       overlay~unbroken~and~first ={
@@ -1165,7 +1178,6 @@ Copyright and Licence
 \DeclareTCBInputListing[use~counter=cvcounter]{\langfileaux}{m}
   {
     title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
-    label={\tl_use:N \l_@@_label_name_tl},
   }
 \NewDocumentCommand \cvfile { s O{} m m }
   {
@@ -1180,6 +1192,12 @@ Copyright and Licence
     \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
+    \tl_if_empty:NF \l_@@_label_name_tl
+    {
+      \tcbset{
+        label=\tl_use:N \l_@@_label_name_tl,
+      }
+    }
     \tcbset{
       cv,
       listing~file={#4},

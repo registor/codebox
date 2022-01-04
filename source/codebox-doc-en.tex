@@ -329,8 +329,7 @@ or command's \oarg{options}.
     label = \Arg{label name} \init{nothing}
   \end{syntax}
   \opt{label} is used to set \tn{ref} 's label name,
-  it is for \env{codeview}/\env{codeview*} and \tn{cvfile}/\tn{cvfile*}
-  and valid only for \pkg{mined} engine.
+  it is for \env{codeview}/\env{codeview*} and \tn{cvfile}/\tn{cvfile*}.
   The default is \textbf{nothing}.
 \end{function}
 
@@ -344,7 +343,7 @@ or command's \oarg{options}.
   By default, if \tn{thechapter} exists, its parent counter is set to \textbf{chapter}
   otherwise it will be counted uniformly by full text. 
 
-  You can use 
+  You can use
   \tn{renewcommand\{\tn{thecvcounter}\}\{\tn{thechapter.\tn{arabic\{cvcounter\}}}\}}
   or something like this macro to change the numbered output.
 \end{function}
