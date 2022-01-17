@@ -148,7 +148,7 @@ Copyright and Licence
 %</internal>
 %<package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<package>\RequirePackage{expl3}
-%<+package>\GetIdInfo$Id: codebox.dtx 1.0.3 2022-01-04 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
+%<+package>\GetIdInfo$Id: codebox.dtx 1.0.4 2022-01-17 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
 %<package>  {Code Box with tcolorbox and minted/listings.}
 %<package>\ProvidesExplPackage{\ExplFileName}
 %<package>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -180,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{313}
+% \CheckSum{307}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -1021,6 +1021,7 @@ Copyright and Licence
 % \end{macro}
 %
 % \changes{v1.0.1}{2021/12/27}{修订代码盒子前多一个逗号的问题}
+% \changes{v1.0.4}{2022/1/17}{修改用户接口的{group_begin}到开始位置}
 %
 % \subsection{不计数代码盒子用户接口}
 %
@@ -1029,9 +1030,9 @@ Copyright and Licence
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codebox }{O{} m }
   {
-    \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
-    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \bool_set_false:N  \l_@@_comment_bool
+    \keys_set:nn { codebox } { #1 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
@@ -1047,9 +1048,9 @@ Copyright and Licence
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codebox* }{O{} m }
   {
-    \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
-    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \bool_set_false:N  \l_@@_comment_bool
+    \keys_set:nn { codebox } { #1 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tcbset{lang, title={#2} }%
@@ -1065,15 +1066,14 @@ Copyright and Licence
 %    \begin{macrocode}
 \NewDocumentCommand \codefile { s O{} m m }
   {
+    \group_begin:
     \IfBooleanTF{#1}
       {
         \bool_set_true:N  \l_@@_comment_bool
       }{
         \bool_set_false:N \l_@@_comment_bool
       }
-
-    \group_begin:
-    \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
+    \keys_set:nn { codebox } { #2 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tcbset{
@@ -1106,9 +1106,9 @@ Copyright and Licence
   }
 \NewDocumentEnvironment{ codeview }{O{} m }
   {
-    \bool_set_false:N  \l_@@_comment_bool
     \group_begin:
-    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \bool_set_false:N  \l_@@_comment_bool
+    \keys_set:nn { codebox } { #1 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tl_if_empty:NF \l_@@_label_name_tl
@@ -1142,9 +1142,9 @@ Copyright and Licence
 %    \begin{macrocode}
 \NewDocumentEnvironment{ codeview* }{O{} m }
   {
-    \bool_set_true:N  \l_@@_comment_bool
     \group_begin:
-    \IfNoValueF{#1}{ \keys_set:nn { codebox } { #1 } }
+    \bool_set_true:N  \l_@@_comment_bool
+    \keys_set:nn { codebox } { #1 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tl_if_empty:NF \l_@@_label_name_tl
@@ -1181,15 +1181,14 @@ Copyright and Licence
   }
 \NewDocumentCommand \cvfile { s O{} m m }
   {
+    \group_begin:
     \IfBooleanTF{#1}
       {
         \bool_set_true:N  \l_@@_comment_bool
       }{
         \bool_set_false:N \l_@@_comment_bool
       }
-
-    \group_begin:
-    \IfNoValueF{#2}{ \keys_set:nn { codebox } { #2 } }
+    \keys_set:nn { codebox } { #2 }
     \@@_code_engine_tcbset:
     \@@_comment_tcbset:
     \tl_if_empty:NF \l_@@_label_name_tl
