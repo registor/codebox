@@ -148,7 +148,7 @@ Copyright and Licence
 %</internal>
 %<package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<package>\RequirePackage{expl3}
-%<+package>\GetIdInfo$Id: codebox.dtx 1.0.4 2022-01-17 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
+%<+package>\GetIdInfo$Id: codebox.dtx 1.0.4 2022-01-28 08:00:00 +0800 Nan Geng <nangeng@nwafu.edu.cn> $
 %<package>  {Code Box with tcolorbox and minted/listings.}
 %<package>\ProvidesExplPackage{\ExplFileName}
 %<package>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -180,7 +180,7 @@ Copyright and Licence
 %
 % \changes{v1.0.0}{2021/12/25}{开始编写模板}
 %
-% \CheckSum{307}
+% \CheckSum{313}
 % \GetFileId{codebox.sty}
 %
 % \CharacterTable
@@ -477,9 +477,9 @@ Copyright and Licence
 %
 % \subsection{行号间距}
 %
-% \begin{function}[added=2021-12-26,updated=2021-12-26]{linenumsep}
+% \begin{function}[added=2021-12-26,updated=2022-1-28]{linenumsep}
 %   \begin{syntax}
-%     linenumsep = \Arg{浮点数} \init{3.0}
+%     linenumsep = \Arg{浮点数} \init{1.80}
 %   \end{syntax}
 %   \opt{linenumsep} 用于设置代码盒子行号与代码的间距，仅对\textbf{minted}
 %   引擎有效，取浮点数，单位是mm。默认值为\textbf{3.0}。
@@ -723,6 +723,8 @@ Copyright and Licence
 }%
 %    \end{macrocode}
 %
+% \changes{v1.0.4}{2022/1/28}{修订分页代码盒子无行号底色问题}
+%
 % 代码盒子cv样式
 %
 %    \begin{macrocode}
@@ -748,7 +750,19 @@ Copyright and Licence
       \begin{tcbclipinterior}
         \fill[cvblue] (frame.south~west) rectangle ([xshift=5.0mm,yshift=0mm]frame.north~west);
       \end{tcbclipinterior}
-    }
+    },
+    underlay~middle = {
+      \begin{tcbclipinterior}
+        \fill[cvblue] (frame.south~west) rectangle
+          ([xshift=5.0mm,yshift=0mm]frame.north~west);
+      \end{tcbclipinterior}
+    },
+    underlay~last = {
+      \begin{tcbclipinterior}
+        \fill[cvblue] (frame.south~west) rectangle
+          ([xshift=5.0mm,yshift=0mm]frame.north~west);
+      \end{tcbclipinterior}
+    },
   }
 }%
 %    \end{macrocode}
@@ -786,6 +800,8 @@ Copyright and Licence
 \fp_new:N     \l_@@_linenumber_sep_fp
 %    \end{macrocode}
 % \end{variable}
+%
+% \changes{v1.0.4}{2022/1/28}{修正linenumsep为默认值1.80以避免3位行号溢出边界}
 %
 % \subsection{选项处理}
 %
@@ -865,7 +881,7 @@ Copyright and Licence
 % 行号与文本之间的距离(单位：mm)
 %    \begin{macrocode}
     linenumsep .fp_set:N  = \l_@@_linenumber_sep_fp,
-    linenumsep .initial:n = 3.00,
+    linenumsep .initial:n = 1.80,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1021,7 +1037,7 @@ Copyright and Licence
 % \end{macro}
 %
 % \changes{v1.0.1}{2021/12/27}{修订代码盒子前多一个逗号的问题}
-% \changes{v1.0.4}{2022/1/17}{修改用户接口的{group_begin}到开始位置}
+% \changes{v1.0.4}{2022/1/28}{修改用户接口的{group_begin}到开始位置}
 %
 % \subsection{不计数代码盒子用户接口}
 %
