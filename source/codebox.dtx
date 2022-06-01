@@ -1118,7 +1118,7 @@ Copyright and Licence
 %    \begin{macrocode}
 \DeclareTCBListing[use~counter=cvcounter]{codeviewaux}{m}
   {
-    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter{}:\nobreakspace~#1},
   }
 \NewDocumentEnvironment{ codeview }{O{} m }
   {
@@ -1193,7 +1193,7 @@ Copyright and Licence
 %    \begin{macrocode}
 \DeclareTCBInputListing[use~counter=cvcounter]{\langfileaux}{m}
   {
-    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter\nobreakspace~#1},
+    title={\tl_use:N \l_@@_code_name_tl\nobreakspace\thecvcounter{}:\nobreakspace~#1},
   }
 \NewDocumentCommand \cvfile { s O{} m m }
   {
